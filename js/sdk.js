@@ -1,9 +1,13 @@
 const SDK = {
     serverURL: "https://localhost:8443/api",
     request: (options, cb) => {
+
+        let token = {"AUTHORIZATION":localStorage.getItem("token")}
+
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
+            headers:token,
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(options.data),
@@ -27,8 +31,8 @@ const SDK = {
         },
         logOut: () => {
             SDK.Storage.remove("tokenId");
-            SDK.Storage.remove("userId");
-            SDK.Storage.remove("user");
+           SDK.Storage.remove("userId");
+           SDK.Storage.remove("user");
             window.location.href = "index.html";
         },
         login: (email, password, cb) => {
@@ -37,16 +41,15 @@ const SDK = {
                     email: email,
                     password: password
                 },
-                url: "/users/login?include=user",
+                url: "/auth",
                 method: "POST"
             }, (err, data) => {
 
                 //On login-error
                 if (err) return cb(err);
 
-                SDK.Storage.persist("tokenId", data.id);
-                SDK.Storage.persist("userId", data.userId);
-                SDK.Storage.persist("user", data.user);
+                localStorage.setItem("token", data);
+
 
                 cb(null, data);
 
@@ -57,7 +60,7 @@ const SDK = {
                 const currentUser = SDK.User.current();
                 if (currentUser) {
                     $(".navbar-right").html(`
-            <li><a href="my-page.html">Your orders</a></li>
+            <li><a href="home-page.html">Startside</a></li>
             <li><a href="#" id="logout-link">Logout</a></li>
           `);
                 } else {
