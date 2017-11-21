@@ -21,8 +21,8 @@ const SDK = {
 
     },
 
-
     Users: {
+
         findAll: (cb) => {
             SDK.request({method: "GET", url: "/users"}, cb);
         },
@@ -33,7 +33,7 @@ const SDK = {
             SDK.Storage.remove("tokenId");
            SDK.Storage.remove("userId");
            SDK.Storage.remove("user");
-            window.location.href = "index.html";
+            window.location.href = "login.html";
         },
         login: (email, password, cb) => {
             SDK.request({
@@ -72,5 +72,35 @@ const SDK = {
                 cb && cb();
             });
         }
-    }
+    },
+
+
+
+CreateUsers: {
+
+    createUser:(password,name,lastname,email,description,gender,major,semester (err, data)=> {
+        SDK.request({
+            data: {
+                password: password,
+                name: name,
+                lastname: lastname,
+                email: email,
+                description: description,
+                gender: gender,
+                major: major,
+                semester: semester
+
+
+            },
+            url: "/user",
+            method: "POST"
+        }, (err, data) => {
+
+            // createUser-error
+            if (err) return cb(err);
+
+
+            cb(null, data);
+        });
+
 }
