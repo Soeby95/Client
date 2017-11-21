@@ -2,12 +2,12 @@ const SDK = {
     serverURL: "https://localhost:8443/api",
     request: (options, cb) => {
 
-        let token = {"AUTHORIZATION":localStorage.getItem("token")}
+        let token = {"AUTHORIZATION": localStorage.getItem("token")}
 
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
-            headers:token,
+            headers: token,
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(options.data),
@@ -31,8 +31,8 @@ const SDK = {
         },
         logOut: () => {
             SDK.Storage.remove("tokenId");
-           SDK.Storage.remove("userId");
-           SDK.Storage.remove("user");
+            SDK.Storage.remove("userId");
+            SDK.Storage.remove("user");
             window.location.href = "login.html";
         },
         login: (email, password, cb) => {
@@ -75,32 +75,36 @@ const SDK = {
     },
 
 
+    CreateUsers: {
 
-CreateUsers: {
-
-    createUser:(password,name,lastname,email,description,gender,major,semester (err, data)=> {
-        SDK.request({
-            data: {
-                password: password,
-                name: name,
-                lastname: lastname,
-                email: email,
-                description: description,
-                gender: gender,
-                major: major,
-                semester: semester
-
-
-            },
-            url: "/user",
-            method: "POST"
-        }, (err, data) => {
-
-            // createUser-error
-            if (err) return cb(err);
+        createUser: (password, firstname, lastname, email, description, gender, major, semester, cb) => {
+            SDK.request({
+                data: {
+                    password: password,
+                    firstName: firstname,
+                    lastName: lastname,
+                    email: email,
+                    description: description,
+                    gender: gender,
+                    major: major,
+                    semester: semester
 
 
-            cb(null, data);
-        });
+                },
+                url: "/users",
+                method: "POST"
+            }, (err, data) => {
 
-}
+                // createUser-error
+                if (err) return cb(err);
+
+
+                cb(null, data);
+            });
+        }
+
+    }
+
+};
+
+

@@ -5,7 +5,7 @@ $(document).ready(() => {
     $("#createUser-button").click(() => {
 
         const password = $("#inputPassword").val();
-        const name = $("#inputName").val();
+        const firstname = $("#inputFirstName").val();
         const lastname = $("#inputLastName").val();
         const email = $("#inputEmail").val();
         const description = $("#inputDescription").val();
@@ -13,7 +13,7 @@ $(document).ready(() => {
         const major = $("#inputMajor").val();
         const semester = $("#inputSemester").val();
 
-        SDK.createUser(password,name,lastname,email,description,gender,major,semester (err, data); => {
+        SDK.CreateUsers.createUser(password,firstname,lastname,email,description,gender,major,semester, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }
