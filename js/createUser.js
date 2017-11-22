@@ -13,7 +13,7 @@ $(document).ready(() => {
         const major = $("#inputMajor").val();
         const semester = $("#inputSemester").val();
 
-        SDK.CreateUsers.createUser(password,firstname,lastname,email,description,gender,major,semester, (err, data) => {
+        SDK.Users.createUser(password,firstname,lastname,email,description,gender,major,semester, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }

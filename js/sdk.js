@@ -30,7 +30,7 @@ const SDK = {
             return SDK.Storage.load("users");
         },
         logOut: () => {
-            SDK.Storage.remove("tokenId");
+            SDK.localStorage.remove("token");
             SDK.Storage.remove("userId");
             SDK.Storage.remove("user");
             window.location.href = "login.html";
@@ -55,28 +55,6 @@ const SDK = {
 
             });
         },
-        loadNav: (cb) => {
-            $("#nav-container").load("nav.html", () => {
-                const currentUser = SDK.User.current();
-                if (currentUser) {
-                    $(".navbar-right").html(`
-            <li><a href="home-page.html">Startside</a></li>
-            <li><a href="#" id="logout-link">Logout</a></li>
-          `);
-                } else {
-                    $(".navbar-right").html(`
-            <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
-          `);
-                }
-                $("#logout-link").click(() => SDK.User.logOut());
-                cb && cb();
-            });
-        }
-    },
-
-
-    CreateUsers: {
-
         createUser: (password, firstname, lastname, email, description, gender, major, semester, cb) => {
             SDK.request({
                 data: {
@@ -101,10 +79,25 @@ const SDK = {
 
                 cb(null, data);
             });
+        },
+        loadNav: (cb) => {
+            $("#nav-container").load("nav.html", () => {
+                const currentUser = SDK.User.current();
+                if (currentUser) {
+                    $(".navbar-right").html(`
+            <li><a href="home-page.html">Startside</a></li>
+            <li><a href="#" id="logout-link">Logout</a></li>
+          `);
+                } else {
+                    $(".navbar-right").html(`
+            <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
+          `);
+                }
+                $("#logout-link").click(() => SDK.User.logOut());
+                cb && cb();
+            });
         }
-
     }
-
 };
 
 
