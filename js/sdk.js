@@ -97,7 +97,34 @@ const SDK = {
                 cb && cb();
             });
         }
+    },
+
+    Events:{
+
+        createEvent: (owner_id, title, startDate, endDate, description, cb) => {
+            SDK.request({
+                data: {
+                    owner_id: owner_id,
+                    title: title,
+                    startDate: startDate,
+                    endDate: endDate,
+                    description: description
+                },
+                url: "/events",
+                method: "POST"
+            }, (err, data) => {
+
+                //On login-error
+                if (err) return cb(err);
+
+
+                cb(null, data);
+
+            });
+        },
+
     }
+
 };
 
 
