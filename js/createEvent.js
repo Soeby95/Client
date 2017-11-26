@@ -4,7 +4,7 @@ $(document).ready(() => {
 
     $("#createEvent-button").click(() => {
 
-        const owner_id = $("#inputOwner_id").val();
+        const owner_id = SDK.Users.current();
         const title = $("#inputTitle").val();
         const startDate = $("#inputStartDate").val();
         const endDate = $("#inputEndDate").val();

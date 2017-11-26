@@ -27,7 +27,7 @@ const SDK = {
             SDK.request({method: "GET", url: "/users"}, cb);
         },
         current: () => {
-            return SDK.Storage.load("users");
+            return SDK.localStorage.load("user_id");
         },
         logOut: () => {
             SDK.localStorage.remove("token");
