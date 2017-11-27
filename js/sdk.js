@@ -2,12 +2,12 @@ const SDK = {
     serverURL: "https://localhost:8443/api",
     request: (options, cb) => {
 
-        let token = {"AUTHORIZATION":localStorage.getItem("token")}
+        let token = {"AUTHORIZATION": localStorage.getItem("token")}
 
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
-            headers:token,
+            headers: token,
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(options.data),
@@ -21,8 +21,8 @@ const SDK = {
 
     },
 
-
     Users: {
+
         findAll: (cb) => {
             SDK.request({method: "GET", url: "/users"}, cb);
         },
@@ -30,10 +30,10 @@ const SDK = {
             return SDK.Storage.load("users");
         },
         logOut: () => {
-            SDK.Storage.remove("tokenId");
-           SDK.Storage.remove("userId");
-           SDK.Storage.remove("user");
-            window.location.href = "index.html";
+            SDK.localStorage.remove("token");
+            SDK.Storage.remove("userId");
+            SDK.Storage.remove("user");
+            window.location.href = "login.html";
         },
         login: (email, password, cb) => {
             SDK.request({
@@ -55,6 +55,25 @@ const SDK = {
 
             });
         },
+        createUser: (password, firstname, lastname, email, description, gender, major, semester, cb) => {
+            SDK.request({
+                data: {
+                    password: password,
+                    firstName: firstname,
+                    lastName: lastname,
+                    email: email,
+                    description: description,
+                    gender: gender,
+                    major: major,
+                    semester: semester
+
+
+                },
+                url: "/users",
+                method: "POST"
+            },cb)
+
+        },
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
                 const currentUser = SDK.User.current();
@@ -73,4 +92,6 @@ const SDK = {
             });
         }
     }
-}
+};
+
+
