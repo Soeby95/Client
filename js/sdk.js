@@ -99,7 +99,7 @@ const SDK = {
         }
     },
 
-    Events:{
+    Events: {
 
         createEvent: (owner_id, title, startDate, endDate, description, cb) => {
             SDK.request({
@@ -123,6 +123,9 @@ const SDK = {
             });
         },
 
+        getEvents: (cb) => {
+            SDK.request({method: "GET", url: "/events"}, cb);
+        },
     }
 
 };
