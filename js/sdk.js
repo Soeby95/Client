@@ -82,7 +82,7 @@ const SDK = {
         },
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
-                const currentUser = SDK.User.current();
+                const currentUser = SDK.Users.current();
                 if (currentUser) {
                     $(".navbar-right").html(`
             <li><a href="home-page.html">Startside</a></li>
@@ -93,7 +93,7 @@ const SDK = {
             <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
           `);
                 }
-                $("#logout-link").click(() => SDK.User.logOut());
+                $("#logout-link").click(() => SDK.Users.logOut());
                 cb && cb();
             });
         }
