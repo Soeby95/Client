@@ -24,10 +24,11 @@ const SDK = {
     Users: {
 
         findAll: (cb) => {
-            SDK.request({method: "GET", url: "/users"}, cb);
+            SDK.request(
+                {method: "GET", url: "/users"});
         },
         current: () => {
-            return SDK.Storage.load("userId");
+            return localStorage.getItem("user_id");
         },
         logOut: () => {
             SDK.localStorage.remove("token");
@@ -43,15 +44,27 @@ const SDK = {
                 },
                 url: "/auth",
                 method: "POST"
+
+
+
             }, (err, data) => {
 
                 //On login-error
                 if (err) return cb(err);
 
+// https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
+                let token = data;
+
+                var base64Url = token.split('.')[0];
+                var base64 = base64Url.replace('-', '+').replace('_', '/');
+                console.log(JSON.parse(window.atob(base64)));
+
+                localStorage.setItem("user_id", JSON.parse(window.atob(base64)).kid);
                 localStorage.setItem("token", data);
 
-
                 cb(null, data);
+
+
 
             });
         },
@@ -71,6 +84,7 @@ const SDK = {
                 },
                 url: "/users",
                 method: "POST"
+
             }, (err, data) => {
 
                 // createUser-error
@@ -82,7 +96,7 @@ const SDK = {
         },
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
-                const currentUser = SDK.User.current();
+                const currentUser = SDK.Users.current();
                 if (currentUser) {
                     $(".navbar-right").html(`
             <li><a href="home-page.html">Startside</a></li>
@@ -93,7 +107,7 @@ const SDK = {
             <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
           `);
                 }
-                $("#logout-link").click(() => SDK.User.logOut());
+                $("#logout-link").click(() => SDK.Users.logOut());
                 cb && cb();
             });
         }
@@ -112,24 +126,14 @@ const SDK = {
                 },
                 url: "/events",
                 method: "POST",
-                Headers:{
-                    Authorization: SDK.Storage.load("token")
+                headers: {
+                    Authorization: "Bearer" + SDK.Storage.load("token")
                 }
-            }, (err, data) => {
-
-                //On login-error
-                if (err) return cb(err);
-
-
-                cb(null, data);
-
-            });
-        },
-
-        getEvents: (cb) => {
-            SDK.request({method: "GET", url: "/events"}, cb);
-        },
+            }, cb)
+        }
     },
+
+
     Storage: {
         prefix: "CafeNexusSDK",
         persist: (key, value) => {

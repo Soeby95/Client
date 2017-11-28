@@ -4,11 +4,11 @@ $(document).ready(() => {
 
     $("#createEvent-button").click(() => {
 
-        const owner_id = SDK.Users.current();
         const title = $("#inputTitle").val();
         const startDate = $("#inputStartDate").val();
         const endDate = $("#inputEndDate").val();
         const description = $("#inputDescription").val();
+        const owner_id = SDK.Users.current();
 
         SDK.Events.createEvent(owner_id, title, startDate, endDate, description, (err, data) => {
             if (err && err.xhr.status === 401) {
