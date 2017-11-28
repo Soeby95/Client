@@ -27,7 +27,7 @@ const SDK = {
             SDK.request({method: "GET", url: "/users"}, cb);
         },
         current: () => {
-            return SDK.localStorage.load("user_id");
+            return SDK.Storage.load("userId");
         },
         logOut: () => {
             SDK.localStorage.remove("token");
@@ -101,7 +101,7 @@ const SDK = {
 
     Events: {
 
-        createEvent: (owner_id, title, startDate, endDate, description, cb) => {
+        createEvent: (owner_id, title, startDate, endDate, description, data, cb,) => {
             SDK.request({
                 data: {
                     owner_id: owner_id,
@@ -111,7 +111,10 @@ const SDK = {
                     description: description
                 },
                 url: "/events",
-                method: "POST"
+                method: "POST",
+                Headers:{
+                    Authorization: SDK.Storage.load("token")
+                }
             }, (err, data) => {
 
                 //On login-error
@@ -126,6 +129,24 @@ const SDK = {
         getEvents: (cb) => {
             SDK.request({method: "GET", url: "/events"}, cb);
         },
+    },
+    Storage: {
+        prefix: "CafeNexusSDK",
+        persist: (key, value) => {
+            window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
+        },
+        load: (key) => {
+            const val = window.localStorage.getItem(SDK.Storage.prefix + key);
+            try {
+                return JSON.parse(val);
+            }
+            catch (e) {
+                return val;
+            }
+        },
+        remove: (key) => {
+            window.localStorage.removeItem(SDK.Storage.prefix + key);
+        }
     }
 
 };
