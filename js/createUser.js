@@ -13,14 +13,11 @@ $(document).ready(() => {
         const semester = $("#inputSemester").val();
 
         SDK.Users.createUser(password,firstname,lastname,email,description,gender,major,semester, (err, data) => {
-            if (err && err.xhr.status === 401) {
-                $(".form-group").addClass("has-error");
-            }
-            else if (err){
-                console.log("Fejl")
-            } else {
+
+                console.log(err,data);
+
                 window.location.href = "login.html";
-            }
+
         });
 
     });

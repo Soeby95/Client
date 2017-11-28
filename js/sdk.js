@@ -71,14 +71,8 @@ const SDK = {
                 },
                 url: "/users",
                 method: "POST"
-            }, (err, data) => {
+            },cb)
 
-                // createUser-error
-                if (err) return cb(err);
-
-
-                cb(null, data);
-            });
         },
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
