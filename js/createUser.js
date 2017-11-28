@@ -1,6 +1,5 @@
 $(document).ready(() => {
 
-    SDK.Users.loadNav();
 
     $("#createUser-button").click(() => {
 
