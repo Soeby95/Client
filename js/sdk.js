@@ -24,10 +24,11 @@ const SDK = {
     Users: {
 
         findAll: (cb) => {
-            SDK.request({method: "GET", url: "/users"}, cb);
+            SDK.request(
+                {method: "GET", url: "/users"});
         },
         current: () => {
-            return SDK.Storage.load("users");
+            return localStorage.getItem("user_id");
         },
         logOut: () => {
             SDK.localStorage.remove("token");
@@ -43,15 +44,27 @@ const SDK = {
                 },
                 url: "/auth",
                 method: "POST"
+
+
+
             }, (err, data) => {
 
                 //On login-error
                 if (err) return cb(err);
 
+// https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
+                let token = data;
+
+                var base64Url = token.split('.')[0];
+                var base64 = base64Url.replace('-', '+').replace('_', '/');
+                console.log(JSON.parse(window.atob(base64)));
+
+                localStorage.setItem("user_id", JSON.parse(window.atob(base64)).kid);
                 localStorage.setItem("token", data);
 
-
                 cb(null, data);
+
+
 
             });
         },
@@ -71,7 +84,9 @@ const SDK = {
                 },
                 url: "/users",
                 method: "POST"
+
             },cb)
+
 
         },
         loadNav: (cb) => {
@@ -93,9 +108,9 @@ const SDK = {
         }
     },
 
-    Events:{
+    Events: {
 
-        createEvent: (owner_id, title, startDate, endDate, description, cb) => {
+        createEvent: (owner_id, title, startDate, endDate, description, data, cb,) => {
             SDK.request({
                 data: {
                     owner_id: owner_id,
@@ -105,18 +120,32 @@ const SDK = {
                     description: description
                 },
                 url: "/events",
-                method: "POST"
-            }, (err, data) => {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer" + SDK.Storage.load("token")
+                }
+            }, cb)
+        }
+    },
 
-                //On login-error
-                if (err) return cb(err);
 
-
-                cb(null, data);
-
-            });
+    Storage: {
+        prefix: "CafeNexusSDK",
+        persist: (key, value) => {
+            window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
         },
-
+        load: (key) => {
+            const val = window.localStorage.getItem(SDK.Storage.prefix + key);
+            try {
+                return JSON.parse(val);
+            }
+            catch (e) {
+                return val;
+            }
+        },
+        remove: (key) => {
+            window.localStorage.removeItem(SDK.Storage.prefix + key);
+        }
     }
 
 };
