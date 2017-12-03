@@ -29,8 +29,8 @@ const SDK = {
                     method: "GET",
                     url: "/users",
                 },
-        cb);
-    },
+                cb);
+        },
 
         current: () => {
             return localStorage.getItem("user_id");
@@ -50,7 +50,6 @@ const SDK = {
                 method: "POST"
 
 
-
             }, (err, data) => {
 
                 //On login-error
@@ -67,7 +66,6 @@ const SDK = {
                 localStorage.setItem("token", data);
 
                 cb(null, data);
-
 
 
             });
@@ -89,7 +87,7 @@ const SDK = {
                 url: "/users",
                 method: "POST"
 
-            },cb)
+            }, cb)
 
 
         },
@@ -141,6 +139,21 @@ const SDK = {
         }
     },
 
+    Posts: {
+        createPost: (owner, content, data, cb) => {
+
+            SDK.request({
+                    data: {
+                        owner: owner,
+                        content: content
+                    },
+                    url: "/posts",
+                    method: "POST",
+                },
+                cb);
+        }
+},
+
 
     Storage: {
         prefix: "CafeNexusSDK",
@@ -159,7 +172,7 @@ const SDK = {
         remove: (key) => {
             window.localStorage.removeItem(SDK.Storage.prefix + key);
         }
-    }
+    },
 
 };
 

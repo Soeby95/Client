@@ -22,7 +22,7 @@ $(document).ready(() => {
          
             </tr>
             </table>
-            <div id="getUsers"></div>
+            <div id="getEvents"></div>
             </div>
         
                 `

@@ -16,8 +16,6 @@ $(document).ready(() => {
             <tr>
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
-            <td>${user.email}</td>
-            <td>${user.gender}</td>
             <td>${user.major}</td>
             <td>${user.semester}</td>
             <td>${user.description}</td>
