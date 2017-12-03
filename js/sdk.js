@@ -25,15 +25,19 @@ const SDK = {
 
         findAll: (cb) => {
             SDK.request(
-                {method: "GET", url: "/users"});
-        },
+                {
+                    method: "GET",
+                    url: "/users",
+                },
+        cb);
+    },
+
         current: () => {
             return localStorage.getItem("user_id");
         },
         logOut: () => {
-            SDK.localStorage.remove("token");
-            SDK.Storage.remove("userId");
-            SDK.Storage.remove("user");
+            SDK.Storage.remove("token");
+            SDK.Storage.remove("user_id");
             window.location.href = "login.html";
         },
         login: (email, password, cb) => {
@@ -125,6 +129,15 @@ const SDK = {
                     Authorization: "Bearer" + SDK.Storage.load("token")
                 }
             }, cb)
+        },
+
+        getEvents: (cb) => {
+            SDK.request(
+                {
+                    method: "GET",
+                    url: "/events",
+                },
+                cb);
         }
     },
 
