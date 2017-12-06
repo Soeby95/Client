@@ -9,41 +9,41 @@
 
     <title>Café-Neuxs</title>
 
-    <div>
-        <h1>Velkommen til Café-Nexus</h1>
-    </div>
-
 </head>
 
 <body>
 
 
-<div>
+<div class="container">
+
+    <h1>Velkommen til Café-Nexus</h1>
 
 
     <div class="form-group">
 
         <label class="control-label" for="inputEmail">Email address</label>
         <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+
     </div>
 
-<div class="form-group">
+    <div class="form-group">
 
 
         <label class="control-label" for="inputPassword">Password</label>
         <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+
+    </div>
+
+    <div>
+
+        <button class="btn btn-default" id="login-button">Login</button>
+        <button class="btn btn-default" onclick="location.href ='createUser.html'" id="newUser-button">Opret bruger
+        </button>
+
     </div>
 
 
 </div>
-
-<div>
-
-    <button class="btn btn-default" id="login-button">Login</button>
-    <button class="btn btn-default" onclick="location.href ='createUser.html'" id="newUser-button">Opret bruger</button>
-
-</div>
-
 
 
 <script src="lib/js/jquery-3.2.1.js"></script>

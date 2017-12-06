@@ -8,25 +8,13 @@ $(document).ready(() => {
         events.forEach((event) => {
 
             $getEvents.append(`
-
-    <div class="row">
-            <div class="co-lg-8">
-            <div class="page-header">
-            <table>
             <tr>
-            <td>${event.owner_id}</td>
             <td>${event.title}</td>
             <td>${event.startDate}</td>
             <td>${event.endDate}</td>
             <td>${event.description}</td>
-         
             </tr>
-            </table>
-            <div id="getEvents"></div>
-            </div>
-        
-                `
-            );
+                `);
         });
     });
 

@@ -35,7 +35,7 @@ const SDK = {
         current: () => {
             return localStorage.getItem("user_id");
         },
-        logOut: () => {
+        logOut: (cb) => {
             SDK.Storage.remove("token");
             SDK.Storage.remove("user_id");
             window.location.href = "login.html";
@@ -112,11 +112,11 @@ const SDK = {
 
     Events: {
 
-        createEvent: (owner_id, title, startDate, endDate, description, data, cb,) => {
+        createEvent: (owner_id, title, startDate, endDate, description, data, cb) => {
             SDK.request({
                 data: {
-                    owner_id: owner_id,
                     title: title,
+                    owner_id: owner_id,
                     startDate: startDate,
                     endDate: endDate,
                     description: description
@@ -126,7 +126,12 @@ const SDK = {
                 headers: {
                     Authorization: "Bearer" + SDK.Storage.load("token")
                 }
-            }, cb)
+            }, (err, data) => {
+
+                if (err) return cb(err);
+
+                cb(null, data);
+            });
         },
 
         getEvents: (cb) => {
@@ -136,27 +141,40 @@ const SDK = {
                     url: "/events",
                 },
                 cb);
-        }
+        },
     },
 
-    Posts: {
-        createPost: (owner, content, data, cb) => {
 
-            SDK.request({
-                    data: {
-                        owner: owner,
-                        content: content
+        Posts: {
+            createPost: (owner, content, cb) => {
+
+                SDK.request({
+                        data: {
+                            owner: owner,
+                            content: content
+                        },
+                        url: "/posts",
+                        method: "POST",
                     },
+                    cb);
+            },
+        getPosts: (cb) => {
+            SDK.request({
                     url: "/posts",
-                    method: "POST",
-                },
-                cb);
-        }
-},
+                    method: "GET",
+                }, (err, data) => {
+               if(err) return cb(err);
+
+               cb(null, data);
+
+            });
+
+        },
+    },
 
 
     Storage: {
-        prefix: "CafeNexusSDK",
+        prefix: "",
         persist: (key, value) => {
             window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
         },
