@@ -4,6 +4,8 @@ $(document).ready(() => {
 
     $("#createEvent-button").click(() => {
 
+
+
         const title = $("#inputTitle").val();
         const startDate = $("#inputStartDate").val();
         const endDate = $("#inputEndDate").val();
@@ -11,14 +13,12 @@ $(document).ready(() => {
         const owner_id = SDK.Users.current();
 
         SDK.Events.createEvent(owner_id, title, startDate, endDate, description, (err, data) => {
-            if (err && err.xhr.status === 401) {
-                $(".form-group").addClass("has-error");
-            }
-            else if (err){
-                console.log("Fejl")
-            } else {
-                window.location.href = "home-page.html";
-            }
+
+            console.log(err,data);
+
+
+            window.location.href = "events.html";
+
         });
 
     });

@@ -123,15 +123,9 @@ const SDK = {
                 },
                 url: "/events",
                 method: "POST",
-                headers: {
-                    Authorization: "Bearer" + SDK.Storage.load("token")
-                }
-            }, (err, data) => {
 
-                if (err) return cb(err);
-
-                cb(null, data);
-            });
+            },
+                cb);
         },
 
         getEvents: (cb) => {

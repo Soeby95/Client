@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     SDK.Users.loadNav();
 
-    $("#createPost-button").click(() => {
+    $("#createPost-button").click((e) => {
 
         const owner = SDK.Users.current();
         const content = $("#inputContent").val();
@@ -15,7 +15,7 @@ $(document).ready(() => {
 
             console.log(err,data);
 
-               // window.location.href = "home-page.html";
+               window.location.href = "posts.html";
 
         });
 
