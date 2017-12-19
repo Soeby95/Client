@@ -2,6 +2,8 @@ const SDK = {
     serverURL: "https://localhost:8443/api",
     request: (options, cb) => {
 
+        // Let token sørger for at man får en token key med når man logger ind som bliver gemt i local storage
+
         let token = {"AUTHORIZATION": localStorage.getItem("token")}
 
         $.ajax({
@@ -20,6 +22,9 @@ const SDK = {
         });
 
     },
+
+    // User metoden i SDK håndterer alt logik der har med brugeren at gøre.
+    // Metoderne der benytte i Users er POST og GET metoder, det er også i SDK filen API'ets endpoint specificeres.
 
     Users: {
 
@@ -56,6 +61,8 @@ const SDK = {
                 if (err) return cb(err);
 
 // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
+// Nedestående kode dekrypter en token  på den aktive bruger, således user_id kan sendes med når der laves
+
                 let token = data;
 
                 var base64Url = token.split('.')[0];
@@ -110,6 +117,10 @@ const SDK = {
         }
     },
 
+
+
+    // Events metoden i SDK håndterer alt logik der har med events at gøre.
+    // Metoderne der benytte i Users er POST og GET metoder, det er også i SDK filen API'ets endpoint specificeres.
     Events: {
 
         createEvent: (owner_id, title, startDate, endDate, description, data, cb) => {
@@ -135,38 +146,38 @@ const SDK = {
                     url: "/events",
                 },
                 cb);
-        },
+        }
     },
 
+     // Post metoden i SDK håndterer alt logik der har med brugeren at gøre.
+     // Metoderne der benytte i Users er POST og GET metoder, det er også i SDK filen API'ets endpoint specificeres.
 
-        Posts: {
-            createPost: (owner, content, cb) => {
+    Posts: {
+        createPost: (owner, content, cb) => {
 
-                SDK.request({
-                        data: {
-                            owner: owner,
-                            content: content
-                        },
-                        url: "/posts",
-                        method: "POST",
-                    },
-                    cb);
-            },
-        getPosts: (cb) => {
             SDK.request({
+                    data: {
+                        owner: owner,
+                        content: content
+                    },
                     url: "/posts",
-                    method: "GET",
-                }, (err, data) => {
-               if(err) return cb(err);
-
-               cb(null, data);
-
-            });
-
+                    method: "POST",
+                },
+                cb);
         },
+
+        getPosts: (cb) => {
+            SDK.request(
+                {
+                url: "/posts",
+                method: "GET",
+            },
+                cb);
+
+        }
     },
 
-
+        // Storage metoden sørger for at fjerne den gemte token key fra local storage, når brugeren logger ud
     Storage: {
         prefix: "",
         persist: (key, value) => {

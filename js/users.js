@@ -2,6 +2,8 @@ $(document).ready(() => {
 
     SDK.Users.loadNav();
 
+    // Variablerne til at hente alle bruger bliver her specificeret, så de passer til API'et
+
     const $getUsers = $("#getUsers");
 
     SDK.Users.findAll((err, users) => {

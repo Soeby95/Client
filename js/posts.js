@@ -2,6 +2,8 @@ $(document).ready(() => {
 
     SDK.Users.loadNav();
 
+    // Variablerne til at oprette et event bliver her lavet, så de passer til API'et
+
     const $getPosts = $("#getPosts");
 
     SDK.Posts.getPosts((err, posts) => {

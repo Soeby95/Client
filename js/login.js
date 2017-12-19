@@ -1,5 +1,7 @@
 $(document).ready(() => {
 
+    // Variablerne til at logge ind bliver her specificeret, så de passer til API'et
+
     $("#login-button").click(() => {
 
         const email = $("#inputEmail").val();

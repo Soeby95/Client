@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+    // Variablerne til at oprette en ny bruger bliver her specificeret, så de passer til API'et
 
     $("#createUser-button").click(() => {
 
