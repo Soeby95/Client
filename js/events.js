@@ -1,8 +1,11 @@
 $(document).ready(() => {
 
-    // Variablerne til at se events bliver her specificeret, så de passer til API'et
+
+
 
     SDK.Users.loadNav();
+
+    // Variablerne til at se events bliver her specificeret, så de passer til API'ets endpoint
 
     const $getEvents = $("#getEvents");
 

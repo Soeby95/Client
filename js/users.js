@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     SDK.Users.loadNav();
 
-    // Variablerne til at hente alle bruger bliver her specificeret, så de passer til API'et
+    // Variablerne til at hente alle bruger bliver her specificeret, så de passer til API'ets endpoint
 
     const $getUsers = $("#getUsers");
 

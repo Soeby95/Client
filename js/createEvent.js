@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     SDK.Users.loadNav();
 
-    // Variablerne til at oprette et event bliver her specificeret, så de passer til API'et
+    // Variablerne til at oprette et event bliver her specificeret, så de passer til API'ets endpoint
 
     $("#createEvent-button").click(() => {
 

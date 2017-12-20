@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     SDK.Users.loadNav();
 
-    // Variablerne til at oprette en post bliver her specificeret, så de passer til API'et
+    // Variablerne til at oprette en post bliver her specificeret, så de passer til API'ets endpoint
 
     $("#createPost-button").click((e) => {
 

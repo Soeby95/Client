@@ -61,7 +61,7 @@ const SDK = {
                 if (err) return cb(err);
 
 // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
-// Nedestående kode dekrypter en token  på den aktive bruger, således user_id kan sendes med når der laves
+// Nedestående kode dekrypter en token  på den aktive bruger, således user_id kan sendes med når der laves en post
 
                 let token = data;
 
